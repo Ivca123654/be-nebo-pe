@@ -72,3 +72,612 @@
     .stars {
       display: flex;
       gap: 4px;
+      font-size: 27px;
+    }
+
+    .star {
+      filter: grayscale(1);
+      opacity: 0.28;
+    }
+
+    .star.earned {
+      filter: none;
+      opacity: 1;
+      animation: starPop 0.6s ease;
+    }
+
+    .progress {
+      height: 18px;
+      margin-top: 14px;
+      overflow: hidden;
+      border-radius: 20px;
+      background: #eee5f8;
+    }
+
+    .progress-bar {
+      width: 0;
+      height: 100%;
+      border-radius: 20px;
+      background: linear-gradient(90deg, #ff82ba, #ffcf55);
+      transition: width 0.5s ease;
+    }
+
+    .next-star {
+      margin: 9px 0 0;
+      color: #6a5d7a;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .card {
+      padding: 25px;
+      text-align: center;
+    }
+
+    .picture {
+      min-height: 90px;
+      margin-bottom: 4px;
+      font-size: 75px;
+      animation: float 2.8s ease-in-out infinite;
+    }
+
+    .word {
+      margin: 5px 0 12px;
+      color: #3d3159;
+      font-size: clamp(48px, 13vw, 76px);
+      font-weight: 900;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+    }
+
+    .hint {
+      min-height: 53px;
+      margin: 0 auto 13px;
+      color: #665777;
+      font-size: 19px;
+      font-weight: bold;
+      line-height: 1.35;
+    }
+
+    .question {
+      margin: 8px 0 17px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .answers {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .answer {
+      min-height: 100px;
+      border: 0;
+      border-radius: 25px;
+      color: white;
+      font-size: 58px;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 8px 0 rgba(0, 0, 0, 0.12);
+      transition: transform 0.15s, filter 0.15s;
+      touch-action: manipulation;
+    }
+
+    .answer:hover {
+      filter: brightness(1.05);
+      transform: translateY(-2px);
+    }
+
+    .answer:active {
+      transform: translateY(5px);
+      box-shadow: 0 3px 0 rgba(0, 0, 0, 0.12);
+    }
+
+    .answer-b {
+      background: linear-gradient(145deg, #55c7f4, #3989df);
+    }
+
+    .answer-p {
+      background: linear-gradient(145deg, #ff8dbd, #e85a9c);
+    }
+
+    .message {
+      min-height: 38px;
+      margin: 20px 0 0;
+      color: #7047a8;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .correct-word {
+      color: #319b69;
+    }
+
+    .wrong {
+      color: #d36a31;
+      animation: shake 0.35s ease;
+    }
+
+    .star-path {
+      margin-top: 18px;
+      padding: 17px;
+      text-align: center;
+    }
+
+    .star-path h2 {
+      margin: 0 0 14px;
+      font-size: 20px;
+    }
+
+    .milestones {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 7px;
+    }
+
+    .milestone {
+      padding: 9px 3px;
+      border-radius: 14px;
+      background: #f4effa;
+      color: #756785;
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    .milestone span {
+      display: block;
+      margin-bottom: 3px;
+      font-size: 23px;
+      filter: grayscale(1);
+      opacity: 0.3;
+    }
+
+    .milestone.earned {
+      color: #8b6307;
+      background: #fff2b7;
+    }
+
+    .milestone.earned span {
+      filter: none;
+      opacity: 1;
+    }
+
+    .reset-button {
+      display: block;
+      margin: 18px auto 10px;
+      padding: 10px 16px;
+      border: 0;
+      border-radius: 15px;
+      color: #756785;
+      background: rgba(255, 255, 255, 0.72);
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 10;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(69, 44, 92, 0.62);
+    }
+
+    .overlay.show {
+      display: flex;
+    }
+
+    .celebration {
+      width: min(520px, 100%);
+      padding: 35px 24px;
+      border-radius: 32px;
+      background: white;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+      text-align: center;
+      animation: pop 0.5s ease;
+    }
+
+    .big-star {
+      font-size: 100px;
+      animation: starPop 0.8s ease infinite alternate;
+    }
+
+    .celebration h2 {
+      margin: 7px 0;
+      color: #7047a8;
+      font-size: 32px;
+    }
+
+    .celebration p {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .continue-button {
+      padding: 17px 25px;
+      border: 0;
+      border-radius: 20px;
+      color: white;
+      background: linear-gradient(145deg, #8d68cc, #6d46a8);
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    @keyframes float {
+      50% {
+        transform: translateY(-7px);
+      }
+    }
+
+    @keyframes starPop {
+      from {
+        transform: scale(0.8) rotate(-8deg);
+      }
+      to {
+        transform: scale(1.14) rotate(8deg);
+      }
+    }
+
+    @keyframes pop {
+      from {
+        opacity: 0;
+        transform: scale(0.7);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes shake {
+      25% {
+        transform: translateX(-7px);
+      }
+      50% {
+        transform: translateX(7px);
+      }
+      75% {
+        transform: translateX(-4px);
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 11px;
+      }
+
+      .card {
+        padding: 20px 15px;
+      }
+
+      .answer {
+        min-height: 88px;
+      }
+
+      .score-row {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="game">
+    <h1>⭐ Bé nebo Pé? ⭐</h1>
+    <p class="subtitle">Hvězdičková výprava za písmenky</p>
+
+    <section class="score-panel">
+      <div class="score-row">
+        <div>
+          Body:
+          <span id="score" class="score-number">0</span>
+          / 100
+        </div>
+
+        <div class="stars" aria-label="Získané hvězdičky">
+          <span class="star">⭐</span>
+          <span class="star">⭐</span>
+          <span class="star">⭐</span>
+          <span class="star">⭐</span>
+          <span class="star">⭐</span>
+        </div>
+      </div>
+
+      <div class="progress">
+        <div id="progressBar" class="progress-bar"></div>
+      </div>
+
+      <p id="nextStar" class="next-star"></p>
+    </section>
+
+    <section class="card">
+      <div id="picture" class="picture">🐶</div>
+      <div id="word" class="word">_ES</div>
+      <p id="hint" class="hint">Štěká a vrtí ocáskem.</p>
+      <p class="question">Které písmenko chybí?</p>
+
+      <div class="answers">
+        <button class="answer answer-b" onclick="checkAnswer('b')">B</button>
+        <button class="answer answer-p" onclick="checkAnswer('p')">P</button>
+      </div>
+
+      <p id="message" class="message">
+        Vyber správné písmenko ⭐
+      </p>
+    </section>
+
+    <section class="star-path">
+      <h2>⭐ Tvoje hvězdičková cesta</h2>
+
+      <div class="milestones">
+        <div class="milestone">
+          <span>⭐</span>
+          10 bodů
+        </div>
+        <div class="milestone">
+          <span>⭐</span>
+          30 bodů
+        </div>
+        <div class="milestone">
+          <span>⭐</span>
+          50 bodů
+        </div>
+        <div class="milestone">
+          <span>⭐</span>
+          70 bodů
+        </div>
+        <div class="milestone">
+          <span>🏆</span>
+          100 bodů
+        </div>
+      </div>
+    </section>
+
+    <button class="reset-button" onclick="resetGame()">
+      🔄 Začít znovu
+    </button>
+  </main>
+
+  <div id="overlay" class="overlay">
+    <div class="celebration">
+      <div id="bigStar" class="big-star">⭐</div>
+      <h2 id="celebrationTitle">Jupí!</h2>
+      <p id="celebrationText">Získáváš hvězdičku!</p>
+      <button id="continueButton" class="continue-button" onclick="continueGame()">
+        HRAJEME DÁL ▶
+      </button>
+    </div>
+  </div>
+
+  <script>
+    const words = [
+      { word: "bota", letter: "b", emoji: "👟", hint: "Obouvám si ji na nohu." },
+      { word: "banán", letter: "b", emoji: "🍌", hint: "Žluté ovoce, které oloupeme." },
+      { word: "buben", letter: "b", emoji: "🥁", hint: "Hrajeme na něj paličkami." },
+      { word: "beruška", letter: "b", emoji: "🐞", hint: "Červený brouček s tečkami." },
+      { word: "balón", letter: "b", emoji: "⚽", hint: "Kopeme si s ním." },
+      { word: "bagr", letter: "b", emoji: "🚜", hint: "Velký stroj, který kope hlínu." },
+      { word: "balík", letter: "b", emoji: "📦", hint: "Krabice, kterou přiveze kurýr." },
+      { word: "boty", letter: "b", emoji: "👢", hint: "Nosíme je na nohou." },
+      { word: "bunda", letter: "b", emoji: "🧥", hint: "Oblečeme si ji, když je zima." },
+      { word: "brýle", letter: "b", emoji: "👓", hint: "Pomáhají nám lépe vidět." },
+      { word: "bratr", letter: "b", emoji: "👦", hint: "Kluk, který je můj sourozenec." },
+      { word: "babička", letter: "b", emoji: "👵", hint: "Maminka mojí maminky nebo tatínka." },
+      { word: "bazén", letter: "b", emoji: "🏊", hint: "Místo, kde plaveme." },
+      { word: "baterka", letter: "b", emoji: "🔦", hint: "Posvítíme si s ní ve tmě." },
+      { word: "brambora", letter: "b", emoji: "🥔", hint: "Roste v zemi." },
+      { word: "brokolice", letter: "b", emoji: "🥦", hint: "Zelená zelenina jako malý stromek." },
+      { word: "bublina", letter: "b", emoji: "🫧", hint: "Vyfoukneme ji z bublifuku." },
+      { word: "budík", letter: "b", emoji: "⏰", hint: "Ráno nás probudí." },
+      { word: "bouřka", letter: "b", emoji: "⛈️", hint: "Venku hřmí a blýská se." },
+      { word: "borůvka", letter: "b", emoji: "🫐", hint: "Malá modrá lesní kulička." },
+      { word: "buchta", letter: "b", emoji: "🧁", hint: "Sladká dobrota upečená v troubě." },
+      { word: "brusle", letter: "b", emoji: "⛸️", hint: "Jezdíme na nich po ledě." },
+      { word: "brčko", letter: "b", emoji: "🥤", hint: "Pijeme přes něj limonádu." },
+      { word: "blůza", letter: "b", emoji: "👚", hint: "Druh oblečení." },
+      { word: "bedna", letter: "b", emoji: "📦", hint: "Velká krabice nebo přepravka." },
+      { word: "banka", letter: "b", emoji: "🏦", hint: "Místo, kde lidé mají peníze." },
+      { word: "balkon", letter: "b", emoji: "🏠", hint: "Můžeme na něj vyjít z domu." },
+      { word: "barevný", letter: "b", emoji: "🌈", hint: "Má hodně různých barev." },
+      { word: "blesk", letter: "b", emoji: "⚡", hint: "Zableskne se při bouřce." },
+      { word: "bláto", letter: "b", emoji: "🐾", hint: "Vznikne, když se hlína namočí." },
+      { word: "bludiště", letter: "b", emoji: "🌀", hint: "Hledáme v něm cestu ven." },
+      { word: "branka", letter: "b", emoji: "🥅", hint: "Střílíme do ní gól." },
+      { word: "brouk", letter: "b", emoji: "🪲", hint: "Malý hmyz." },
+
+      { word: "pes", letter: "p", emoji: "🐶", hint: "Štěká a vrtí ocáskem." },
+      { word: "pero", letter: "p", emoji: "🖊️", hint: "Píšeme s ním." },
+      { word: "papír", letter: "p", emoji: "📄", hint: "Můžeme na něj kreslit." },
+      { word: "poklad", letter: "p", emoji: "💎", hint: "Truhla plná vzácných věcí." },
+      { word: "palec", letter: "p", emoji: "👍", hint: "Největší prst na ruce." },
+      { word: "panda", letter: "p", emoji: "🐼", hint: "Černobílý medvěd." },
+      { word: "papoušek", letter: "p", emoji: "🦜", hint: "Barevný pták." },
+      { word: "prsten", letter: "p", emoji: "💍", hint: "Nosíme ho na prstu." },
+      { word: "panenka", letter: "p", emoji: "🪆", hint: "Hračka, o kterou se můžeme starat." },
+      { word: "polštář", letter: "p", emoji: "🛏️", hint: "Dáváme si na něj hlavu při spaní." },
+      { word: "ponožka", letter: "p", emoji: "🧦", hint: "Oblékáme ji na chodidlo." },
+      { word: "pomeranč", letter: "p", emoji: "🍊", hint: "Oranžové kulaté ovoce." },
+      { word: "polévka", letter: "p", emoji: "🥣", hint: "Jíme ji lžící." },
+      { word: "pastelka", letter: "p", emoji: "🖍️", hint: "Kreslíme s ní." },
+      { word: "penál", letter: "p", emoji: "✏️", hint: "Schováváme do něj tužky." },
+      { word: "plavky", letter: "p", emoji: "🩱", hint: "Oblečeme si je do bazénu." },
+      { word: "pláštěnka", letter: "p", emoji: "🌧️", hint: "Chrání nás před deštěm." },
+      { word: "pláž", letter: "p", emoji: "🏖️", hint: "Je u moře a bývá na ní písek." },
+      { word: "plot", letter: "p", emoji: "🏡", hint: "Stojí kolem zahrady." },
+      { word: "postel", letter: "p", emoji: "🛏️", hint: "V noci v ní spíme." },
+      { word: "počítač", letter: "p", emoji: "💻", hint: "Můžeme na něm psát nebo hrát hry." },
+      { word: "pohádka", letter: "p", emoji: "📖", hint: "Příběh třeba o princezně nebo drakovi." },
+      { word: "piráti", letter: "p", emoji: "🏴‍☠️", hint: "Plují na lodi a hledají poklad." },
+      { word: "pizza", letter: "p", emoji: "🍕", hint: "Kulaté jídlo se sýrem." },
+      { word: "palačinka", letter: "p", emoji: "🥞", hint: "Sladká dobrota s marmeládou." },
+      { word: "perník", letter: "p", emoji: "🍪", hint: "Sladké voňavé pečivo." },
+      { word: "princezna", letter: "p", emoji: "👸", hint: "Bydlí v pohádkovém zámku." },
+      { word: "prales", letter: "p", emoji: "🌴", hint: "Hustý les plný rostlin a zvířat." },
+      { word: "pravítko", letter: "p", emoji: "📏", hint: "Nakreslíme s ním rovnou čáru." },
+      { word: "prase", letter: "p", emoji: "🐷", hint: "Růžové zvíře, které chrochtá." },
+      { word: "prcek", letter: "p", emoji: "👶", hint: "Říkáme tak někomu malému." },
+      { word: "pírko", letter: "p", emoji: "🪶", hint: "Je lehké a mají ho ptáci." },
+      { word: "pusa", letter: "p", emoji: "😘", hint: "Dáme ji někomu, koho máme rádi." },
+      { word: "peřina", letter: "p", emoji: "🛌", hint: "Přikryjeme se jí v posteli." }
+    ];
+
+    const milestones = [10, 30, 50, 70, 100];
+
+    let score = Number(localStorage.getItem("beNeboPeScore")) || 0;
+    let currentWord = null;
+    let previousIndex = -1;
+    let waiting = false;
+    let reachedMilestone = null;
+
+    const scoreElement = document.getElementById("score");
+    const wordElement = document.getElementById("word");
+    const pictureElement = document.getElementById("picture");
+    const hintElement = document.getElementById("hint");
+    const messageElement = document.getElementById("message");
+    const progressBar = document.getElementById("progressBar");
+    const nextStarElement = document.getElementById("nextStar");
+    const overlay = document.getElementById("overlay");
+
+    function showNewWord() {
+      waiting = false;
+      messageElement.className = "message";
+      messageElement.textContent = "Vyber správné písmenko ⭐";
+
+      let newIndex;
+
+      do {
+        newIndex = Math.floor(Math.random() * words.length);
+      } while (newIndex === previousIndex && words.length > 1);
+
+      previousIndex = newIndex;
+      currentWord = words[newIndex];
+
+      pictureElement.textContent = currentWord.emoji;
+      hintElement.textContent = currentWord.hint;
+      wordElement.textContent = "_" + currentWord.word.slice(1).toUpperCase();
+    }
+
+    function checkAnswer(answer) {
+      if (waiting || !currentWord) {
+        return;
+      }
+
+      if (answer === currentWord.letter) {
+        waiting = true;
+
+        if (score < 100) {
+          score++;
+          localStorage.setItem("beNeboPeScore", score);
+        }
+
+        wordElement.textContent = currentWord.word.toUpperCase();
+        messageElement.className = "message correct-word";
+        messageElement.textContent = "🎉 Správně! Výborně! +1 bod";
+
+        updateScore();
+
+        if (milestones.includes(score)) {
+          reachedMilestone = score;
+
+          setTimeout(() => {
+            showCelebration(score);
+          }, 750);
+        } else {
+          setTimeout(showNewWord, 1000);
+        }
+      } else {
+        messageElement.className = "message wrong";
+        messageElement.textContent = "💛 Skoro! Zkus to ještě jednou.";
+      }
+    }
+
+    function updateScore() {
+      scoreElement.textContent = score;
+
+      const stars = document.querySelectorAll(".star");
+      const milestoneBoxes = document.querySelectorAll(".milestone");
+
+      milestones.forEach((milestone, index) => {
+        const earned = score >= milestone;
+
+        stars[index].classList.toggle("earned", earned);
+        milestoneBoxes[index].classList.toggle("earned", earned);
+      });
+
+      progressBar.style.width = score + "%";
+
+      const nextMilestone = milestones.find(milestone => score < milestone);
+
+      if (nextMilestone) {
+        const remaining = nextMilestone - score;
+
+        nextStarElement.textContent =
+          "🌈 Do další hvězdičky zbývá " +
+          remaining +
+          (remaining === 1 ? " bod!" : " bodů!");
+      } else {
+        nextStarElement.textContent = "🏆 Máš všechny hvězdičky!";
+      }
+    }
+
+    function showCelebration(milestone) {
+      const celebrationTitle = document.getElementById("celebrationTitle");
+      const celebrationText = document.getElementById("celebrationText");
+      const bigStar = document.getElementById("bigStar");
+      const continueButton = document.getElementById("continueButton");
+
+      if (milestone === 100) {
+        bigStar.textContent = "🏆";
+        celebrationTitle.textContent = "Jsi Mistryně B a P!";
+        celebrationText.textContent =
+          "Získala jsi všech pět hvězdiček. To je skvělý výkon!";
+        continueButton.textContent = "HRÁT ZNOVU ⭐";
+      } else {
+        bigStar.textContent = "⭐";
+        celebrationTitle.textContent = "Jupí!";
+        celebrationText.textContent =
+          "Pokořila jsi " + milestone + " bodů a získáváš další hvězdičku!";
+        continueButton.textContent = "HRAJEME DÁL ▶";
+      }
+
+      overlay.classList.add("show");
+    }
+
+    function continueGame() {
+      overlay.classList.remove("show");
+
+      if (reachedMilestone === 100) {
+        resetGame();
+      } else {
+        showNewWord();
+      }
+
+      reachedMilestone = null;
+    }
+
+    function resetGame() {
+      const reallyReset = confirm(
+        "Opravdu chceš začít znovu od nuly?"
+      );
+
+      if (!reallyReset) {
+        return;
+      }
+
+      score = 0;
+      reachedMilestone = null;
+      localStorage.setItem("beNeboPeScore", score);
+      overlay.classList.remove("show");
+      updateScore();
+      showNewWord();
+    }
+
+    updateScore();
+    showNewWord();
+  </script>
+</body>
+</html>
