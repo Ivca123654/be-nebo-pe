@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bé nebo Pé? ⭐</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      color: #40345d;
+      background:
+        radial-gradient(circle at 10% 10%, #fff4b8 0 8%, transparent 9%),
+        radial-gradient(circle at 90% 15%, #ffd8eb 0 8%, transparent 9%),
+        linear-gradient(160deg, #dff7ff, #f8e8ff 55%, #fff1f7);
+      display: flex;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .game {
+      width: 100%;
+      max-width: 650px;
+    }
+
+    h1 {
+      margin: 5px 0;
+      color: #7047a8;
+      text-align: center;
+      font-size: clamp(30px, 7vw, 48px);
+    }
+
+    .subtitle {
+      margin: 5px 0 18px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .score-panel,
+    .card,
+    .star-path {
+      background: rgba(255, 255, 255, 0.93);
+      border-radius: 28px;
+      box-shadow: 0 10px 30px rgba(91, 64, 130, 0.14);
+    }
+
+    .score-panel {
+      padding: 18px;
+      margin-bottom: 18px;
+    }
+
+    .score-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      font-weight: bold;
+    }
+
+    .score-number {
+      color: #7047a8;
+      font-size: 25px;
+    }
+
+    .stars {
+      display: flex;
+      gap: 4px;
