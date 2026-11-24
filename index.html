@@ -78,8 +78,8 @@
     }
 
     .task-count {
-      font-weight: bold;
       color: #746681;
+      font-weight: bold;
     }
 
     .score-row {
@@ -142,10 +142,21 @@
     .word {
       margin: 5px 0 12px;
       color: #3d3159;
-      font-size: clamp(45px, 12vw, 72px);
+      font-size: clamp(38px, 10vw, 68px);
       font-weight: 900;
-      letter-spacing: 4px;
+      letter-spacing: 3px;
       text-transform: uppercase;
+      overflow-wrap: anywhere;
+    }
+
+    .active-blank {
+      display: inline-block;
+      min-width: 45px;
+      padding: 0 5px;
+      border-radius: 12px;
+      color: #7047a8;
+      background: #fff0a8;
+      box-shadow: 0 0 0 4px #ffd664;
     }
 
     .hint {
@@ -431,8 +442,8 @@
       </p>
 
       <div class="answers">
-        <button id="answer1" class="answer"></button>
-        <button id="answer2" class="answer"></button>
+        <button id="answer1" class="answer">B</button>
+        <button id="answer2" class="answer">S</button>
       </div>
 
       <p id="message" class="message">
@@ -446,7 +457,7 @@
       <h2 id="levelInfoTitle">🌱 Level 1: Poznám správné slovo</h2>
 
       <p id="levelInfoText">
-        Jedno písmenko vytvoří správné slovo. Druhé písmenko vytvoří nesmysl.
+        Jedno písmenko vytvoří správné slovo. Druhé vytvoří nesmysl.
       </p>
 
       <p>
@@ -470,11 +481,10 @@
         id="continueButton"
         class="continue-button"
         onclick="continueToNextLevel()">
-        JDU NA LEVEL 2 ▶
+        DALŠÍ LEVEL ▶
       </button>
 
       <button
-        id="repeatButton"
         class="repeat-button"
         onclick="repeatLevel()">
         🔄 ZKUSIT LEVEL ZNOVU
@@ -483,7 +493,7 @@
   </div>
 
   <script>
-    const allWords = [
+    const starterWords = [
       {
         word: "babička",
         letter: "b",
@@ -555,77 +565,6 @@
         hint: "Místo, kde plaveme."
       },
       {
-        word: "baterka",
-        letter: "b",
-        wrong: "j",
-        emoji: "🔦",
-        hint: "Posvítíme si s ní ve tmě."
-      },
-      {
-        word: "brambora",
-        letter: "b",
-        wrong: "t",
-        emoji: "🥔",
-        hint: "Roste v zemi."
-      },
-      {
-        word: "bublina",
-        letter: "b",
-        wrong: "k",
-        emoji: "🫧",
-        hint: "Vyfoukneme ji z bublifuku."
-      },
-      {
-        word: "budík",
-        letter: "b",
-        wrong: "h",
-        emoji: "⏰",
-        hint: "Ráno nás probudí."
-      },
-      {
-        word: "borůvka",
-        letter: "b",
-        wrong: "d",
-        emoji: "🫐",
-        hint: "Malá modrá lesní kulička."
-      },
-      {
-        word: "buchta",
-        letter: "b",
-        wrong: "r",
-        emoji: "🧁",
-        hint: "Sladká dobrota upečená v troubě."
-      },
-      {
-        word: "brusle",
-        letter: "b",
-        wrong: "t",
-        emoji: "⛸️",
-        hint: "Jezdíme na nich po ledě."
-      },
-      {
-        word: "brčko",
-        letter: "b",
-        wrong: "v",
-        emoji: "🥤",
-        hint: "Pijeme přes něj limonádu."
-      },
-      {
-        word: "blesk",
-        letter: "b",
-        wrong: "t",
-        emoji: "⚡",
-        hint: "Zableskne se při bouřce."
-      },
-      {
-        word: "branka",
-        letter: "b",
-        wrong: "t",
-        emoji: "🥅",
-        hint: "Střílíme do ní gól."
-      },
-
-      {
         word: "pes",
         letter: "p",
         wrong: "t",
@@ -689,81 +628,157 @@
         hint: "Hračka, o kterou se můžeme starat."
       },
       {
-        word: "polštář",
-        letter: "p",
-        wrong: "h",
-        emoji: "🛏️",
-        hint: "Dáváme si na něj hlavu při spaní."
-      },
-      {
         word: "ponožka",
         letter: "p",
         wrong: "k",
         emoji: "🧦",
         hint: "Oblékáme ji na chodidlo."
+      }
+    ];
+
+    const middleWords = [
+      {
+        word: "kapybara",
+        masked: "ka_ybara",
+        letter: "p",
+        emoji: "🐹",
+        hint: "Velké klidné zvíře podobné morčeti."
       },
       {
-        word: "pomeranč",
+        word: "propiska",
+        masked: "pro_iska",
         letter: "p",
-        wrong: "d",
-        emoji: "🍊",
-        hint: "Oranžové kulaté ovoce."
+        emoji: "🖊️",
+        hint: "Píšeme s ní."
       },
       {
-        word: "polévka",
-        letter: "p",
-        wrong: "v",
-        emoji: "🥣",
-        hint: "Jíme ji lžící."
+        word: "koberec",
+        masked: "ko_erec",
+        letter: "b",
+        emoji: "🧶",
+        hint: "Leží na podlaze."
       },
       {
-        word: "pastelka",
-        letter: "p",
-        wrong: "m",
-        emoji: "🖍️",
-        hint: "Kreslíme s ní."
+        word: "robot",
+        masked: "ro_ot",
+        letter: "b",
+        emoji: "🤖",
+        hint: "Stroj, který může plnit úkoly."
       },
       {
-        word: "penál",
+        word: "paprika",
+        masked: "pa_rika",
         letter: "p",
-        wrong: "t",
-        emoji: "✏️",
-        hint: "Schováváme do něj tužky."
+        emoji: "🫑",
+        hint: "Barevná zelenina."
       },
       {
-        word: "plavky",
-        letter: "p",
-        wrong: "d",
-        emoji: "🩱",
-        hint: "Oblečeme si je do bazénu."
+        word: "tabule",
+        masked: "ta_ule",
+        letter: "b",
+        emoji: "🏫",
+        hint: "Ve škole se na ni píše."
       },
       {
-        word: "pláštěnka",
+        word: "lopata",
+        masked: "lo_ata",
         letter: "p",
-        wrong: "k",
-        emoji: "🌧️",
-        hint: "Chrání nás před deštěm."
+        emoji: "🧹",
+        hint: "Pomáhá nabírat hlínu nebo sníh."
       },
       {
-        word: "pláž",
-        letter: "p",
-        wrong: "v",
-        emoji: "🏖️",
-        hint: "Je u moře a bývá na ní písek."
+        word: "obálka",
+        masked: "o_álka",
+        letter: "b",
+        emoji: "✉️",
+        hint: "Dáváme do ní dopis."
       },
       {
-        word: "pizza",
+        word: "sopka",
+        masked: "so_ka",
         letter: "p",
-        wrong: "l",
-        emoji: "🍕",
-        hint: "Kulaté jídlo se sýrem."
+        emoji: "🌋",
+        hint: "Může z ní vytékat láva."
       },
       {
-        word: "prase",
-        letter: "p",
-        wrong: "d",
-        emoji: "🐷",
-        hint: "Růžové zvíře, které chrochtá."
+        word: "kabát",
+        masked: "ka_át",
+        letter: "b",
+        emoji: "🧥",
+        hint: "Teplé oblečení do zimy."
+      }
+    ];
+
+    const doubleWords = [
+      {
+        word: "kapybara",
+        masked: "ka_y_ara",
+        answers: ["p", "b"],
+        emoji: "🐹",
+        hint: "Velké klidné zvíře podobné morčeti."
+      },
+      {
+        word: "pobíhat",
+        masked: "_o_íhat",
+        answers: ["p", "b"],
+        emoji: "🏃",
+        hint: "Běhat sem a tam."
+      },
+      {
+        word: "přilba",
+        masked: "_řil_a",
+        answers: ["p", "b"],
+        emoji: "⛑️",
+        hint: "Chrání hlavu."
+      },
+      {
+        word: "pobřeží",
+        masked: "_o_řeží",
+        answers: ["p", "b"],
+        emoji: "🌊",
+        hint: "Místo, kde se země setkává s vodou."
+      },
+      {
+        word: "pobyt",
+        masked: "_o_yt",
+        answers: ["p", "b"],
+        emoji: "🏡",
+        hint: "Čas strávený na nějakém místě."
+      },
+      {
+        word: "pobavit",
+        masked: "_o_avit",
+        answers: ["p", "b"],
+        emoji: "🎭",
+        hint: "Rozesmát nebo zabavit."
+      },
+      {
+        word: "pobrukovat",
+        masked: "_o_rukovat",
+        answers: ["p", "b"],
+        emoji: "🎵",
+        hint: "Potichu si zpívat melodii."
+      },
+      {
+        word: "bílý pes",
+        masked: "_ílý _es",
+        answers: ["b", "p"],
+        emoji: "🐶",
+        hint: "Světlý pejsek."
+      },
+      {
+        word: "papírová bota",
+        masked: "_apírová _ota",
+        answers: ["p", "b"],
+        emoji: "👟",
+        hint: "Bota vyrobená z papíru."
+      },
+      {
+        word: "babiččin pes",
+        masked: "_abiččin _es",
+        answers: ["b", "p"],
+        emoji: "👵🐶",
+        hint: "Pejsek, který patří babičce."
       }
     ];
 
@@ -774,7 +789,9 @@
     let score = 0;
     let currentWord = null;
     let levelWords = [];
+    let starterLevelWords = [];
     let locked = false;
+    let blankIndex = 0;
 
     const levelBadge = document.getElementById("levelBadge");
     const taskCount = document.getElementById("taskCount");
@@ -814,16 +831,30 @@
       return copy;
     }
 
-    function createLevelWords() {
+    function chooseStarterWords() {
       const bWords = shuffle(
-        allWords.filter(item => item.letter === "b")
+        starterWords.filter(item => item.letter === "b")
       ).slice(0, 5);
 
       const pWords = shuffle(
-        allWords.filter(item => item.letter === "p")
+        starterWords.filter(item => item.letter === "p")
       ).slice(0, 5);
 
-      levelWords = shuffle([...bWords, ...pWords]);
+      starterLevelWords = shuffle([...bWords, ...pWords]);
+    }
+
+    function setWordsForLevel() {
+      if (level === 1 || level === 2) {
+        levelWords = [...starterLevelWords];
+      }
+
+      if (level === 3) {
+        levelWords = shuffle(middleWords);
+      }
+
+      if (level === 4) {
+        levelWords = shuffle(doubleWords);
+      }
     }
 
     function createStars() {
@@ -837,11 +868,41 @@
       }
     }
 
+    function getLevelSettings() {
+      const settings = {
+        1: {
+          badge: "🌱 LEVEL 1",
+          title: "🌱 Level 1: Poznám správné slovo",
+          text: "Jedno písmenko vytvoří správné slovo. Druhé vytvoří nesmysl.",
+          question: "Které písmenko vytvoří správné slovo?"
+        },
+        2: {
+          badge: "⭐ LEVEL 2",
+          title: "⭐ Level 2: Rozliším B a P",
+          text: "U stejných známých slov vybíráš mezi písmenky B a P.",
+          question: "Patří sem B, nebo P?"
+        },
+        3: {
+          badge: "🚀 LEVEL 3",
+          title: "🚀 Level 3: Najdu písmeno uvnitř slova",
+          text: "Písmeno B nebo P už může chybět také uprostřed slova.",
+          question: "Které písmenko chybí uvnitř slova?"
+        },
+        4: {
+          badge: "🏆 LEVEL 4",
+          title: "🏆 Level 4: Doplním B i P",
+          text: "Ve slově nebo spojení chybí dvě písmena. Doplň je postupně.",
+          question: "Doplň zvýrazněné prázdné místo."
+        }
+      };
+
+      return settings[level];
+    }
+
     function updateHeader() {
-      levelBadge.textContent =
-        level === 1
-          ? "🌱 LEVEL 1"
-          : "⭐ LEVEL 2";
+      const settings = getLevelSettings();
+
+      levelBadge.textContent = settings.badge;
 
       taskCount.textContent =
         "Úloha " +
@@ -855,81 +916,124 @@
         starsElement.querySelectorAll(".star");
 
       stars.forEach((star, index) => {
-        star.classList.toggle(
-          "earned",
-          index < score
-        );
+        star.classList.toggle("earned", index < score);
       });
 
       progressBar.style.width =
         (questionIndex / QUESTIONS_PER_LEVEL) * 100 + "%";
 
       document.getElementById("levelInfoTitle").textContent =
-        level === 1
-          ? "🌱 Level 1: Poznám správné slovo"
-          : "⭐ Level 2: Rozliším B a P";
+        settings.title;
 
       document.getElementById("levelInfoText").textContent =
-        level === 1
-          ? "Jedno písmenko vytvoří správné slovo. Druhé vytvoří nesmysl."
-          : "Teď vybíráš mezi písmenky B a P u stejných známých slov.";
+        settings.text;
     }
 
-    function showQuestion() {
-      locked = false;
-      currentWord = levelWords[questionIndex];
-
-      updateHeader();
-
-      pictureElement.textContent =
-        currentWord.emoji;
-
-      wordElement.textContent =
-        "_" + currentWord.word.slice(1).toUpperCase();
-
-      hintElement.textContent =
-        currentWord.hint;
-
-      questionElement.textContent =
-        level === 1
-          ? "Které písmenko vytvoří správné slovo?"
-          : "Patří sem B, nebo P?";
-
-      messageElement.className = "message";
-      messageElement.textContent =
-        "Vyber správné písmenko ⭐";
-
-      explanationElement.className = "explanation";
-      explanationElement.textContent = "";
-
+    function resetButtons() {
       answer1.disabled = false;
       answer2.disabled = false;
 
       answer1.className = "answer";
       answer2.className = "answer";
+    }
 
-      let options;
+    function setAnswerButtons(options) {
+      const shuffledOptions = shuffle(options);
+
+      answer1.textContent = shuffledOptions[0].toUpperCase();
+      answer2.textContent = shuffledOptions[1].toUpperCase();
+
+      answer1.onclick = () =>
+        checkAnswer(shuffledOptions[0], answer1);
+
+      answer2.onclick = () =>
+        checkAnswer(shuffledOptions[1], answer2);
+    }
+
+    function renderDoubleWord() {
+      const parts = currentWord.masked.split("_");
+      let html = "";
+
+      for (let i = 0; i < parts.length; i++) {
+        html += parts[i].toUpperCase();
+
+        if (i < currentWord.answers.length) {
+          if (i < blankIndex) {
+            html += currentWord.answers[i].toUpperCase();
+          } else if (i === blankIndex) {
+            html += '<span class="active-blank">_</span>';
+          } else {
+            html += "_";
+          }
+        }
+      }
+
+      wordElement.innerHTML = html;
+    }
+
+    function showQuestion() {
+      locked = false;
+      blankIndex = 0;
+      currentWord = levelWords[questionIndex];
+
+      updateHeader();
+      resetButtons();
+
+      pictureElement.textContent = currentWord.emoji;
+      hintElement.textContent = currentWord.hint;
+
+      const settings = getLevelSettings();
+      questionElement.textContent = settings.question;
+
+      messageElement.className = "message";
+      messageElement.textContent =
+        level === 4
+          ? "Nejdřív doplň první zvýrazněné místo ⭐"
+          : "Vyber správné písmenko ⭐";
+
+      explanationElement.className = "explanation";
+      explanationElement.textContent = "";
 
       if (level === 1) {
-        options = shuffle([
+        wordElement.textContent =
+          "_" + currentWord.word.slice(1).toUpperCase();
+
+        setAnswerButtons([
           currentWord.letter,
           currentWord.wrong
         ]);
-      } else {
-        options = shuffle(["b", "p"]);
       }
 
-      answer1.textContent =
-        options[0].toUpperCase();
+      if (level === 2) {
+        wordElement.textContent =
+          "_" + currentWord.word.slice(1).toUpperCase();
 
-      answer2.textContent =
-        options[1].toUpperCase();
+        setAnswerButtons(["b", "p"]);
+      }
 
-      answer1.onclick = () =>
-        checkAnswer(options[0], answer1);
+      if (level === 3) {
+        wordElement.textContent =
+          currentWord.masked.toUpperCase();
 
-      answer2.onclick = () =>
-        checkAnswer(options[1], answer2);
+        setAnswerButtons(["b", "p"]);
+      }
+
+      if (level === 4) {
+        renderDoubleWord();
+        setAnswerButtons(["b", "p"]);
+      }
+    }
+
+    function findButtonForLetter(letter) {
+      return [answer1, answer2].find(
+        button =>
+          button.textContent.toLowerCase() === letter
+      );
+    }
+
+    function disableButtons() {
+      answer1.disabled = true;
+      answer2.disabled = true;
     }
 
     function checkAnswer(selectedLetter, selectedButton) {
@@ -937,31 +1041,26 @@
         return;
       }
 
+      if (level === 4) {
+        checkDoubleAnswer(selectedLetter, selectedButton);
+        return;
+      }
+
       locked = true;
-      answer1.disabled = true;
-      answer2.disabled = true;
+      disableButtons();
 
-      const buttons = [answer1, answer2];
-
-      const correctButton = buttons.find(
-        button =>
-          button.textContent.toLowerCase() ===
-          currentWord.letter
-      );
+      const correctLetter = currentWord.letter;
+      const correctButton = findButtonForLetter(correctLetter);
 
       wordElement.textContent =
         currentWord.word.toUpperCase();
 
-      if (selectedLetter === currentWord.letter) {
+      if (selectedLetter === correctLetter) {
         score++;
 
-        selectedButton.classList.add(
-          "correct-answer"
-        );
+        selectedButton.classList.add("correct-answer");
 
-        messageElement.className =
-          "message correct";
-
+        messageElement.className = "message correct";
         messageElement.textContent =
           "🎉 Správně napoprvé! Získáváš hvězdičku.";
 
@@ -969,30 +1068,90 @@
 
         setTimeout(goToNextQuestion, 1500);
       } else {
-        selectedButton.classList.add(
-          "wrong-answer"
-        );
+        selectedButton.classList.add("wrong-answer");
+        correctButton.classList.add("correct-answer");
 
-        correctButton.classList.add(
-          "correct-answer"
-        );
-
-        messageElement.className =
-          "message wrong";
-
+        messageElement.className = "message wrong";
         messageElement.textContent =
           "Tentokrát bez hvězdičky. Pojďme si slovo prohlédnout.";
+
+        explanationElement.className = "explanation show";
+        explanationElement.textContent =
+          currentWord.word.toUpperCase() +
+          " obsahuje písmeno " +
+          correctLetter.toUpperCase() +
+          ".";
+
+        setTimeout(goToNextQuestion, 2800);
+      }
+    }
+
+    function checkDoubleAnswer(selectedLetter, selectedButton) {
+      const correctLetter =
+        currentWord.answers[blankIndex];
+
+      if (selectedLetter !== correctLetter) {
+        locked = true;
+        disableButtons();
+
+        selectedButton.classList.add("wrong-answer");
+
+        const correctButton =
+          findButtonForLetter(correctLetter);
+
+        correctButton.classList.add("correct-answer");
+
+        wordElement.textContent =
+          currentWord.word.toUpperCase();
+
+        messageElement.className = "message wrong";
+        messageElement.textContent =
+          "Tentokrát bez hvězdičky. Podívej se na celé řešení.";
 
         explanationElement.className =
           "explanation show";
 
         explanationElement.textContent =
           currentWord.word.toUpperCase() +
-          " začíná na písmeno " +
-          currentWord.letter.toUpperCase() +
+          " doplníme písmeny " +
+          currentWord.answers
+            .map(letter => letter.toUpperCase())
+            .join(" a ") +
           ".";
 
-        setTimeout(goToNextQuestion, 2800);
+        setTimeout(goToNextQuestion, 3000);
+        return;
+      }
+
+      selectedButton.classList.add("correct-answer");
+      disableButtons();
+
+      blankIndex++;
+      renderDoubleWord();
+
+      if (blankIndex < currentWord.answers.length) {
+        messageElement.className = "message correct";
+        messageElement.textContent =
+          "Výborně! Teď doplň druhé místo.";
+
+        setTimeout(() => {
+          resetButtons();
+          setAnswerButtons(["b", "p"]);
+        }, 700);
+      } else {
+        locked = true;
+        score++;
+
+        wordElement.textContent =
+          currentWord.word.toUpperCase();
+
+        messageElement.className = "message correct";
+        messageElement.textContent =
+          "🎉 Obě písmena správně! Získáváš hvězdičku.";
+
+        updateHeader();
+
+        setTimeout(goToNextQuestion, 1700);
       }
     }
 
@@ -1008,13 +1167,10 @@
 
     function finishLevel() {
       progressBar.style.width = "100%";
-
       overlay.classList.add("show");
 
       celebrationTitle.textContent =
-        level === 1
-          ? "Level 1 dokončen!"
-          : "Level 2 dokončen!";
+        "Level " + level + " dokončen!";
 
       celebrationText.textContent =
         "Získala jsi " +
@@ -1029,12 +1185,34 @@
 
       if (level === 1) {
         bigStar.textContent = "🌱";
-        continueButton.style.display = "block";
         continueButton.textContent =
           "JDU NA LEVEL 2 ▶";
-      } else {
+      }
+
+      if (level === 2) {
+        bigStar.textContent = "⭐";
+        continueButton.textContent =
+          "JDU NA LEVEL 3 ▶";
+      }
+
+      if (level === 3) {
+        bigStar.textContent = "🚀";
+        continueButton.textContent =
+          "JDU NA LEVEL 4 ▶";
+      }
+
+      if (level === 4) {
         bigStar.textContent = "🏆";
-        continueButton.style.display = "block";
+        celebrationTitle.textContent =
+          "Dokončila jsi celou výpravu!";
+
+        celebrationText.textContent =
+          "V Levelu 4 jsi získala " +
+          score +
+          " hvězdiček z " +
+          QUESTIONS_PER_LEVEL +
+          ".";
+
         continueButton.textContent =
           "HRÁT ZNOVU OD LEVELU 1";
       }
@@ -1043,16 +1221,12 @@
     function continueToNextLevel() {
       overlay.classList.remove("show");
 
-      if (level === 1) {
-        level = 2;
+      if (level < 4) {
+        level++;
         questionIndex = 0;
         score = 0;
 
-        /*
-          Pro Level 2 ponecháváme stejná slova,
-          aby je dítě už znalo z Levelu 1.
-        */
-
+        setWordsForLevel();
         createStars();
         showQuestion();
       } else {
@@ -1075,7 +1249,8 @@
       questionIndex = 0;
       score = 0;
 
-      createLevelWords();
+      chooseStarterWords();
+      setWordsForLevel();
       createStars();
       showQuestion();
     }
